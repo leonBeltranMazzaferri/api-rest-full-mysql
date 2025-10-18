@@ -1,5 +1,5 @@
 import { Router } from "express"; //Router va entre llaves porque es un modulo de express
-import pool from '../../config/conexion.js'
+import pool from '../../../api-restful-mysql-capas-mvc/config/conexion.js'
 import {getAllUser, getUserById, createUser, updateUser, deleteUser} from "../controllers/users.controllers.js"
 
 const router = Router();
