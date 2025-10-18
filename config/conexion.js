@@ -1,19 +1,26 @@
 import mysql from 'mysql2/promise';
 
-export const conexion = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'tienda',
-    connectionLimit: 5
-})
+// Crear el pool de conexiones
+const pool = mysql.createPool({
+  host: 'localhost',      // Cambia si tu servidor no es local
+  user: 'root',           // Tu usuario de MySQL
+  password: '20062019',           // Tu contraseña (si tienes)
+  database: 'tienda',     // La base de datos que creaste
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
+});
 
-Pool.getConnection()
-    .then(conn => {
-        console.log('Conexión exitosa a la base de datos');
-        conn.release(); // Liberar la conexión después de usarla
-    })
-    .catch(err => {
-        console.error('Error de conexión a la base de datos:', err);
-    });
-    export default pool;
+// Probar la conexión con un bloque asíncrono
+(async () => {
+  try {
+    const connection = await pool.getConnection();
+    console.log('✅ Conexión a MySQL establecida correctamente.');
+    connection.release();
+  } catch (error) {
+    console.error('❌ Error al conectar con MySQL:', error.message);
+  }
+})();
+
+// Exportar el pool para usarlo en otros archivos
+export default pool;
