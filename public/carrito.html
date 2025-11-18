@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Carrito</title>
+  <link rel="stylesheet" href="estilos/carrito.css">
+
+</head>
+<body>
+  <header id="header"></header>
+  <nav id="nav" class="hidden"></nav>
+
+  <main>
+    <h1>Tu Carrito</h1>
+    <div id="carrito-container"></div>
+    <a href="index.html" class="volver-tienda">Volver a la tienda</a>
+  </main>
+
+  <footer id="footer"></footer>
+
+  <!-- Scripts -->
+  
+  <script src="js/carritoModulo.js"></script>
+  <script src="js/carrito.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      mostrarCarrito();
+    });
+  </script>
+</body>
+</html>

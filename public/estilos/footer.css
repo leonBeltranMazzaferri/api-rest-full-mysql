@@ -1,0 +1,33 @@
+body {
+  margin: 0;
+  font-family: sans-serif;
+  background-color: #e9c4f4; /* Lila */
+}
+
+footer {
+  width: 100%;
+  background-color: #4b0082;
+  color: #e9c4f4;
+  text-align: center;
+  padding: 20px;
+  position: relative;
+  bottom: 0;
+}
+
+footer .titulo {
+  font-size: 1.2em;
+  margin: 0;
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+    footer {
+        padding: 15px 10px;   /* Reduce el padding lateral y vertical */
+        font-size: 14px;      /* Reduce el tamaño general del texto */
+    }
+
+    footer .titulo {
+        font-size: 1em;       /* Disminuye ligeramente el tamaño del título */
+        line-height: 1.4;     /* Mejora la legibilidad en móviles */
+    }
+}

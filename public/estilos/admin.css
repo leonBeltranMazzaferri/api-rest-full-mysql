@@ -1,0 +1,204 @@
+.admin-title{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+#editar,
+#eliminar {
+    align-items: center;
+    text-align: center;
+    background-color: #4b0082; /* Morado oscuro */
+    color: #e9c4f4; /* Lila */
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    margin: 10px;;
+    transition: background-color 0.3s ease;
+    height: 40px;
+    width: 40px;
+
+
+}
+
+#formAdmin {
+    width: 100%;
+    max-width: 1000px;
+    margin: 15px 0;
+    /* display: flex;
+    flex-direction: column; */
+    display: grid;
+    grid-template-columns: 1fr;
+    /* gap: 15px; */
+}
+
+#AgregarProd, #EditarProd {
+    width: 100%;
+}
+
+@media screen and (min-width: 768px) {
+    /* breakpoint para tablet */
+
+    #formAdmin {
+        /* flex-direction: row;
+        justify-content: space-between; */
+        grid-template-columns: 1fr 1fr ;
+        gap: 15px;
+
+    }
+
+    /* #AgregarProd, #EditarProd {
+        width: 48%;
+    } */
+    
+
+}
+
+@media (max-width: 768px) {
+    .admin-title {
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    #editar,
+    #eliminar {
+        width: 80%;        
+        height: auto;     
+        font-size: 14px;  
+        padding: 12px;    
+        margin: 5px auto;  
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+/* Botón Agregar Nuevo Producto */
+.agregar {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.addcarrito {
+  background-color: #6a0dad; /* púrpura */
+  color: #fff;
+  padding: 12px 24px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.addcarrito:hover {
+  background-color: #5500aa;
+}
+
+/* Formularios */
+.formularios {
+  background-color: #f8f8ff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.formularios h2 {
+  margin-bottom: 20px;
+  text-align: center;
+  color: #333;
+}
+
+.formularios label {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+  color: #555;
+}
+
+.formularios input[type="file"],
+.formularios input[type="number"],
+.formularios textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 6px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.formularios input[type="submit"] {
+  margin-top: 20px;
+  width: 100%;
+  background-color: #6a0dad;
+  color: white;
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.formularios input[type="submit"]:hover {
+  background-color: #4b0082;
+}
+
+/* Galería de productos */
+#galeria {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 1200px;
+  box-sizing: border-box;
+}
+
+#galeria .item {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+#galeria .item:hover {
+  transform: translateY(-4px);
+}
+
+#galeria img {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+#galeria h2 {
+  margin: 10px 0 5px;
+  color: #222;
+}
+
+#galeria h3 {
+  font-size: 0.95em;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+#galeria p {
+  font-weight: bold;
+  font-size: 1.1em;
+  color: #6a0dad;
+}
+
+/* Botones editar y eliminar */
+#editar:hover {
+  background-color: #673ab7;
+}
+
+#eliminar:hover {
+  background-color: #c62828;
+}

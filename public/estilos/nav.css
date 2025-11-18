@@ -1,0 +1,60 @@
+#nav {
+  width: 200px;
+  height: 200px;
+  background-color: #e9c4f4; /* Lila */
+  font-style: italic;
+  padding: 10px;
+  position: fixed;
+  top: 50px;
+  right: 0;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+#nav ul {
+  height: 90%;
+  list-style: none;
+  padding: 10px;
+  margin: 5px 0;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+#nav li {
+  padding: 10px;
+  background-color: #f0e6f7; /* Lila claro */
+  border-radius: 5px;
+  margin-bottom: 70px ;
+  color: #4b0082;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.hidden {
+  display: none;
+}
+@media (max-width: 768px) {
+  #nav {
+    width: 100%;                 
+    height: auto;                
+    top: 0;
+    right: 0;
+    border-radius: 0;          
+    padding: 15px 10px;
+    position: fixed;
+  }
+
+  #nav ul {
+    padding: 0;
+    margin: 0;
+    height: auto;
+    box-shadow: none;             
+  }
+
+  #nav li {
+    margin: 10px 0;
+    padding: 12px;
+    font-size: 16px;
+  }
+}

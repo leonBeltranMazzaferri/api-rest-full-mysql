@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilos/average.css">
+    <link rel="stylesheet" href="estilos/header.css">
+    <link rel="stylesheet" href="estilos/nav.css">
+    <link rel="stylesheet" href="estilos/footer.css">
+    <link rel="stylesheet" href="estilos/banner.css">
+    <link rel="stylesheet" href="estilos/galeria.css">
+    <link rel="stylesheet" href="estilos/admin.css">
+
+    <title>Administración SUO</title>
+</head>
+<body>
+    
+<header id="header"></header>
+
+<nav id="nav" class="hidden" ></nav>
+
+    <div class="admin-title"><h1>Administración de Productos</h1></div>    
+
+    <div class="agregar">
+        <button class="addcarrito">Agregar Nuevo Producto</button>
+    </div>
+
+    <div id="formAdmin">
+        <section id="AgregarProd">
+            <form action="" class="formularios" id="nuevoProd">
+                <h2>Nuevo Producto</h2>
+                
+                <label for="nombre">Nombre</label>
+                <input type="text" name="nombre" id="add-nombre" placeholder="Ingrese nombre del producto" required>
+                
+                <label for="imagen">Imagen</label>
+                <input type="file" name="imagen" id="add-imagen">
+                
+                <label for="descripcion">Descripción</label>
+                <textarea name="descripcion" id="add-descripcion" rows="8"
+                    placeholder="Escriba la descripción del producto aqui..." required></textarea>
+                
+                <label for="precio">Precio</label>
+                <input type="number" name="precio" id="add-precio" placeholder="Ingrese el precio" min="0" required>
+                
+                <label for="stock">Stock</label>
+                <input type="number" name="stock" id="add-stock" placeholder="Ingrese la cantidad disponible" min="0" required>
+
+                <input type="submit" value="Agregar Producto" >
+            </form>
+        </section>
+
+        <section id="EditarProd" style="display:none;"> 
+
+            <form action="" class="formularios" id="actualizar">
+                <h2>Actualizar Datos</h2>
+                
+                <label for="nombre">Nombre</label>
+                <input type="text" name="edit-nombre" id="edit-nombre" required>
+
+                <label for="imagen">Imagen</label>
+                <input type="file" name="edit-imagen" id="edit-imagen" >
+                
+                <label for="descripcion">Descripción</label>
+                <textarea name="edit-descripcion" id="edit-descripcion" rows="8" required></textarea>
+                
+                <label for="precio">Precio</label>
+                <input type="number" name="edit-precio" id="edit-precio" min="0" required>
+                
+                <label for="stock">Stock</label>
+                <input type="number" name="edit-stock" id="edit-stock" min="0" required>
+
+                <input type="submit" value="Actualizar Producto">
+            </form>
+        </section>
+    </div>
+
+    <section id="galeria-admin">
+        <p>Cargando productos...</p>
+        </section>
+
+
+<footer id="footer" ></footer>
+
+<script src="js/admin.js"></script> 
+<script src="js/modulo.js"></script> 
+
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Estilos -->
+  <link rel="stylesheet" href="estilos/average.css">
+  <link rel="stylesheet" href="estilos/header.css">
+  <link rel="stylesheet" href="estilos/nav.css">
+  <link rel="stylesheet" href="estilos/footer.css">
+  <link rel="stylesheet" href="estilos/banner.css">
+  <link rel="stylesheet" href="estilos/galeria.css">
+  <link rel="stylesheet" href="estilos/carrito.css">
+
+  <title>tazasSUO</title>
+</head>
+<body>
+  
+  <!-- HEADER Y NAV -->
+  <header id="header"></header>
+  <nav id="nav" class="hidden"></nav>
+
+  <!-- BANNER -->
+  <div id="banner">
+    <img src="images/ChatGPT Image 28 may 2025, 17_36_56.png" alt="Banner">
+  </div>
+
+  <!-- GALERÍA DE PRODUCTOS -->
+  <main>
+    <h2>Productos Disponibles</h2>
+    <div id="galeria"></div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer id="footer"></footer>
+
+  <!-- MODAL CARRITO -->
+  <div id="carrito-modal" class="carrito-modal hidden">
+    <div class="carrito-modal-content">
+      <span id="close-carrito" class="close-carrito">&times;</span>
+      <h2 class="carrito-titulo">
+        <img src="images/cart.png" alt="Carrito" style="height: 1.2em; vertical-align: middle; margin-right: 8px;">
+        Tu Carrito
+      </h2>
+      <div id="carrito-container"></div>
+    </div>
+  </div>
+
+  <!-- ==========================
+       SCRIPTS ORDENADOS
+       ========================== -->
+<script src="js/carritoModulo.js"></script>
+<script src="js/carrito.js"></script>
+<script src="js/favoritos.js"></script>
+<script src="js/obtenerProductosFetch.js"></script>
+<script src="Js/modulo.js"></script>
+
+
+</body>
+</html>

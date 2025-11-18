@@ -1,0 +1,39 @@
+header {
+  background-color: #4b0082; /* Morado oscuro */
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+header img {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  filter: brightness(0) saturate(100%) invert(68%) sepia(11%) saturate(4771%) hue-rotate(208deg) brightness(93%) contrast(96%);
+}
+
+.titulo {
+  color: #e9c4f4; 
+  font-style: italic;
+  margin: 0 15px;
+}
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;      
+        align-items: center;
+        padding: 15px 10px;
+        text-align: center;
+    }
+
+    header img {
+        width: 40px;              
+        height: 40px;
+        margin-bottom: 10px;
+    }
+
+    .titulo {
+        font-size: 16px;            
+        margin: 5px 0 0;
+    }
+}

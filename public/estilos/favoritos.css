@@ -1,0 +1,161 @@
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+}
+
+body {
+  background: #f7f2fa;
+  color: #333;
+  padding: 20px;
+}
+
+
+h1 {
+  text-align: center;
+  margin-bottom: 15px;
+  color: #7e57c2;
+  font-size: 2rem;
+}
+
+a {
+  display: block;
+  text-align: center;
+  margin-bottom: 25px;
+  color: #d81b60;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+a:hover {
+  color: #9c27b0;
+}
+
+
+#favoritos-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  justify-items: center;
+  width: 100%;
+}
+
+.producto-favorito {
+  background: linear-gradient(145deg, #f3e5f5, #fce4ec);
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  width: 100%;
+  max-width: 300px;
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.producto-favorito:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+}
+
+.producto-favorito img {
+  border-radius: 15px;
+  margin-bottom: 15px;
+  width: 100%;
+  height: auto;
+}
+
+
+.producto-favorito p,
+.producto-favorito strong {
+  margin-bottom: 10px;
+  color: #6a1b9a;
+  font-size: 1rem;
+}
+
+.producto-favorito input[type="number"] {
+  width: 60px;
+  padding: 6px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: 1px solid #d1c4e9;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+
+.producto-favorito button {
+  display: block;
+  width: 85%;
+  margin: 8px auto;
+  padding: 10px 0;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.95rem;
+  transition: background 0.3s, color 0.3s;
+}
+
+
+.producto-favorito button:nth-of-type(1) {
+  background: #d81b60;
+  color: #fff;
+}
+
+.producto-favorito button:nth-of-type(1):hover {
+  background: #ec407a;
+}
+
+
+.producto-favorito button:nth-of-type(2) {
+  background: #7e57c2;
+  color: #fff;
+}
+
+.producto-favorito button:nth-of-type(2):hover {
+  background: #9c27b0;
+}
+
+
+@media screen and (max-width: 1024px) {
+  #favoritos-container {
+    grid-template-columns: repeat(2, 1fr); 
+  }
+
+  .producto-favorito {
+    max-width: 280px;
+    padding: 18px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #favoritos-container {
+    grid-template-columns: 1fr;
+  }
+
+  .producto-favorito {
+    max-width: 90%;
+    padding: 20px;
+  }
+  
+}
+
+@media screen and (max-width: 480px) {
+  h1 {
+    font-size: 1.7rem;
+  }
+
+  .producto-favorito p,
+  .producto-favorito strong {
+    font-size: 0.95rem;
+  }
+
+  .producto-favorito button {
+    font-size: 0.9rem;
+    padding: 9px 0;
+  }
+  
+}

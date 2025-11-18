@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Favoritos - SUO</title>
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="estilos/galeria.css">
+  <link rel="stylesheet" href="estilos/favoritos.css">
+</head>
+<body>
+  <header id="header"></header>
+  <nav id="nav" class="hidden"></nav>
+
+  <main>
+    <h1>Favoritos</h1>
+    <a href="index.html" class="volver-tienda">Volver a la tienda</a>
+    <div id="favoritos-container"></div>
+  </main>
+
+  <footer id="footer"></footer>
+
+  <!-- ==========================
+       Scripts
+       ========================== -->
+
+  <!-- 1️⃣ Obtener productos desde JSON -->
+  <script src="js/obtenerProductosFetch.js"></script>
+
+  <!-- 2️⃣ Funciones del carrito -->
+  <script src="js/carritoModulo.js"></script>
+  <script src="js/carrito.js"></script>
+
+  <!-- 3️⃣ Funciones de favoritos -->
+  <script src="js/favoritoModulos.js"></script>
+  <script src="js/favoritos.js"></script>
+
+  <!-- 4️⃣ Inicialización -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Sincronizar con LocalStorage
+      syncFavoritos();
+      syncCarrito();
+
+      // Cargar productos desde JSON y luego mostrar favoritos
+      cargarProductosDesdeJSON(() => {
+        mostrarFavoritos();
+      });
+
+      // Opcional: mostrar mini-carrito si lo deseas
+      mostrarCarrito();
+    });
+  </script>
+</body>
+</html>

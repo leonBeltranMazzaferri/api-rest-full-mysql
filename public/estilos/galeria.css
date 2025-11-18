@@ -1,0 +1,66 @@
+#galeria {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  padding: 20px;
+  text-align: center;
+}
+
+#galeria .item img {
+  margin-top: 20px;
+  width: 50%;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 60px;
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+  outline: none;
+}
+
+#galeria h3 {
+  margin: 0px 0 0;
+  font-style: italic;
+  color: #4b0082; 
+}
+
+#galeria {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 10px;
+  padding: 10px;
+  text-align: center;
+}
+
+#galeria .item img:focus {
+  transform: scale(1.2);
+  z-index: 10;
+}
+
+#contadorCompra{
+
+  width: 66px;
+
+}
+@media (max-width: 768px) {
+    #galeria {
+        grid-template-columns: repeat(1, 1fr);
+        gap: 15px;
+        padding: 15px;
+    }
+
+    #galeria .item img {
+        width: 100%;            
+        height: auto;           
+        border-radius: 10px;    
+        margin-top: 10px;      
+    }
+
+    #galeria h3 {
+        font-size: 16px;       
+    }
+
+    #contadorCompra {
+        width: 50px;           
+    }
+}
