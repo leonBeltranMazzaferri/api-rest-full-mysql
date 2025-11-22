@@ -1,11 +1,6 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
--- https://www.phpmyadmin.net/
---
--- Servidor: 127.0.0.1
--- Tiempo de generación: 25-09-2025 a las 00:59:26
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.0.30
+-- Generado para la base de datos 'tienda'
+-- Tiempo de generación: (Fecha y hora actual)
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,43 +13,81 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `tienda`
+-- Creación de la Base de datos: `tienda`
 --
+CREATE DATABASE IF NOT EXISTS `tienda` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `tienda`;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `usuarios`
+-- Estructura de tabla para la tabla `usuario`
+--
+-- Usando la definición original: id_user, nombre, email(UNIQUE), password, isAdmin(DEFAULT 0)
 --
 
-CREATE TABLE `usuarios` (
-  `id_user` int(11) NOT NULL,
-  `name` varchar(30) NOT NULL,
-  `email` varchar(30) NOT NULL,
-  `image` varchar(30) NOT NULL,
-  `pass` varchar(30) NOT NULL,
-  `type_user` int(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+DROP TABLE IF EXISTS `usuario`;
+CREATE TABLE `usuario` (
+  `id_user` INT(11) NOT NULL,
+  `nombre` VARCHAR(100) NOT NULL,
+  `email` VARCHAR(100) NOT NULL,
+  `password` VARCHAR(255) NOT NULL,
+  `isAdmin` BOOLEAN NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Índices para tablas volcadas
 --
+-- Indices de la tabla `usuario`
+--
+ALTER TABLE `usuario`
+  ADD PRIMARY KEY (`id_user`),
+  ADD UNIQUE KEY `email` (`email`);
 
---
--- Indices de la tabla `usuarios`
---
-ALTER TABLE `usuarios`
-  ADD PRIMARY KEY (`id_user`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
 --
+-- AUTO_INCREMENT de la tabla `usuario`
+--
+ALTER TABLE `usuario`
+  MODIFY `id_user` INT(11) NOT NULL AUTO_INCREMENT;
+
+
+-- --------------------------------------------------------
 
 --
--- AUTO_INCREMENT de la tabla `usuarios`
+-- Estructura de tabla para la tabla `producto`
 --
-ALTER TABLE `usuarios`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT;
+-- Usando la definición original: id_producto, nombre, descripcion, precio, imagen, stock(DEFAULT 0)
+--
+
+DROP TABLE IF EXISTS `producto`;
+CREATE TABLE `producto` (
+  `id_producto` INT(11) NOT NULL,
+  `nombre` VARCHAR(255) NOT NULL,
+  `descripcion` TEXT DEFAULT NULL,
+  `precio` DECIMAL(10, 2) NOT NULL,
+  `imagen` VARCHAR(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Índices para tablas volcadas
+--
+-- Indices de la tabla `producto`
+--
+ALTER TABLE `producto`
+  ADD PRIMARY KEY (`id_producto`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+-- AUTO_INCREMENT de la tabla `producto`
+--
+ALTER TABLE `producto`
+  MODIFY `id_producto` INT(11) NOT NULL AUTO_INCREMENT;
+
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
