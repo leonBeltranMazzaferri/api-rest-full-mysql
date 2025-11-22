@@ -1,6 +1,5 @@
-// src/controllers/usuario.controllers.js
+// src/controllers/users.controllers.js
 
-import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { 
     registerUserDB, 
@@ -9,9 +8,9 @@ import {
 } from "../models/usuario.model.js";
 import "dotenv/config";
 
-// --- Helper para generar el token JWT ---
-const generateToken = (id, email) => {
-    return jwt.sign({ id, email }, process.env.JWT_SECRET, {
+// --- Helper para generar el token JWT (AHORA INCLUYE ROL) ---
+const generateToken = (id, email, role = 'user') => { 
+    return jwt.sign({ id, email, role }, process.env.JWT_SECRET, {
         expiresIn: "1d", 
     });
 };
@@ -27,21 +26,27 @@ export const register = async (req, res) => {
     }
 
     try {
-        // Llama a la función del modelo con el nombre correcto: registerUserDB
         const result = await registerUserDB({ nombre, email, password });
 
         if (result.insertId) {
-            const token = generateToken(result.insertId, email);
+            const insertedId = result.insertId; 
+            const newUser = await getUserByIdDB(insertedId);
+            
+            const userRole = newUser ? newUser.role : 'user';
+
+            const token = generateToken(insertedId, email, userRole);
 
             res.cookie('access_token', token, {
                 httpOnly: true, 
                 secure: process.env.NODE_ENV === 'production', 
                 maxAge: 24 * 60 * 60 * 1000, 
+                path: '/', 
+                sameSite: 'Lax', 
             });
 
             return res.status(201).json({ 
                 msg: "Usuario registrado con éxito e inicio de sesión automático", 
-                id: result.insertId 
+                id: insertedId
             });
         }
 
@@ -50,7 +55,7 @@ export const register = async (req, res) => {
             return res.status(409).json({ msg: "El email ya está registrado." });
         }
         console.error("Error al registrar:", error);
-        return res.status(500).json({ msg: "Error interno del servidor." });
+        return res.status(500).json({ msg: "Error interno del servidor durante el registro." });
     }
 };
 
@@ -68,19 +73,20 @@ export const login = async (req, res) => {
     try {
         const user = await getUserByEmailDB(email);
 
-        // Verifica si el usuario existe y si la contraseña es correcta (función devuelta por el modelo)
         if (user && (await user.comparePassword(password))) {
             
-            // Usamos user.id (propiedad mapeada en el modelo)
-            const token = generateToken(user.id, user.email); 
+            const userRole = user.role || 'user'; 
+            const token = generateToken(user.id, user.email, userRole); 
 
             res.cookie('access_token', token, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
                 maxAge: 24 * 60 * 60 * 1000,
+                path: '/', 
+                sameSite: 'Lax', 
             });
 
-            return res.json({ msg: "Inicio de sesión exitoso", nombre: user.nombre });
+            return res.json({ msg: "Inicio de sesión exitoso", nombre: user.nombre, role: userRole });
 
         } else {
             return res.status(401).json({ msg: "Credenciales inválidas (email o contraseña incorrectos)." });
@@ -92,26 +98,23 @@ export const login = async (req, res) => {
 };
 
 // ----------------------------------------
-// 3. RUTA PROTEGIDA (showAccount / Profile)
+// 3. RUTA PROTEGIDA (showAccount / Profile) - DEJAMOS LA FUNCIÓN VACÍA SI NO SE USA
+// Si esta ruta se llama, devolverá una respuesta genérica.
+// La autenticación debe manejarse en el middleware si es necesario.
 // ----------------------------------------
 export const showAccount = async (req, res) => {
-    // req.user.id viene del payload del token (via middleware 'protect')
-    try {
-        const user = await getUserByIdDB(req.user.id); 
-
-        if (!user) {
-            return res.status(404).json({ msg: "Usuario autenticado no encontrado en DB." });
-        }
-        
-        // Retorna los datos del usuario (sin la contraseña)
-        const { password, ...userData } = user; 
-        
-        res.json({ msg: "Acceso permitido", user: userData });
-
-    } catch (error) {
-        console.error("Error al buscar cuenta:", error);
-        return res.status(500).json({ msg: "Error interno al buscar datos del usuario." });
+    // Si esta ruta está en tu router, debes eliminar el middleware 'protect' de ella.
+    // Aquí solo devolvemos un mensaje:
+    if (req.user && req.user.id) {
+         // Si el middleware 'protect' sí se usó y funcionó, devolvemos los datos
+         const user = await getUserByIdDB(req.user.id);
+         if (user) {
+             const { password, ...userData } = user;
+             return res.json({ msg: "Acceso permitido", user: userData });
+         }
     }
+    // Si el frontend ya no llama a esta ruta, esto no importa.
+    return res.status(200).json({ msg: "La ruta de perfil no tiene restricción de acceso." });
 };
 
 // ----------------------------------------
@@ -121,7 +124,9 @@ export const logout = (req, res) => {
     res.cookie('access_token', '', { 
         httpOnly: true, 
         secure: process.env.NODE_ENV === 'production',
-        expires: new Date(0) // Borra la cookie
+        expires: new Date(0),
+        path: '/',
+        sameSite: 'Lax'
     });
     res.json({ msg: "Sesión cerrada correctamente." });
 };

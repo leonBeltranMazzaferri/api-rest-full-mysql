@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Archivos de estilos originales -->
     <link rel="stylesheet" href="estilos/average.css">
     <link rel="stylesheet" href="estilos/header.css">
     <link rel="stylesheet" href="estilos/nav.css">
@@ -16,6 +16,38 @@
     <link rel="stylesheet" href="estilos/admin.css">
 
     <title>Administración SUO</title>
+    <style>
+        /* Estilos básicos para el contenedor de mensajes */
+        .message { padding: 15px; margin: 15px auto; border-radius: 8px; font-weight: bold; display: none; max-width: 600px; text-align: center; }
+        .success { background-color: #e6ffed; color: #38a169; border: 1px solid #68d391; }
+        .error { background-color: #fff5f5; color: #e53e3e; border: 1px solid #fc8181; }
+        .cancelar-btn { background-color: gray; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin-top: 10px; }
+        
+        /* Estilo para la galería de administración */
+        #galeria-admin {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        #galeria-admin > .item {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #galeria-admin > .item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
     
@@ -23,13 +55,22 @@
 
 <nav id="nav" class="hidden" ></nav>
 
-    <div class="admin-title"><h1>Administración de Productos</h1></div>    
+    <div class="admin-title">
+        <h1>Administración de Productos</h1>
+        <!-- Botón de logout agregado para funcionalidad completa -->
+        <button id="logoutBtn" class="addcarrito" style="background-color: #dc2626; margin-left: auto;">Cerrar Sesión</button>
+    </div>
 
+    <!-- Contenedor de mensajes de éxito/error -->
+    <div id="msg-container" class="message"></div>
+
+    <!-- Botón para mostrar el formulario de agregar (se oculta cuando el formulario está visible) -->
     <div class="agregar">
-        <button class="addcarrito">Agregar Nuevo Producto</button>
+        <button id="mostrarFormAgregar" class="addcarrito">Agregar Nuevo Producto</button>
     </div>
 
     <div id="formAdmin">
+        <!-- SECCIÓN AGREGAR PRODUCTO -->
         <section id="AgregarProd">
             <form action="" class="formularios" id="nuevoProd">
                 <h2>Nuevo Producto</h2>
@@ -37,55 +78,57 @@
                 <label for="nombre">Nombre</label>
                 <input type="text" name="nombre" id="add-nombre" placeholder="Ingrese nombre del producto" required>
                 
-                <label for="imagen">Imagen</label>
-                <input type="file" name="imagen" id="add-imagen">
+                <!-- CORRECCIÓN: Usamos URL de imagen -->
+                <label for="imagen_url">URL de Imagen</label> 
+                <input type="url" name="imagen_url" id="add-imagen-url" placeholder="Pegue el enlace de la imagen aquí (opcional)">
                 
                 <label for="descripcion">Descripción</label>
                 <textarea name="descripcion" id="add-descripcion" rows="8"
                     placeholder="Escriba la descripción del producto aqui..." required></textarea>
                 
                 <label for="precio">Precio</label>
-                <input type="number" name="precio" id="add-precio" placeholder="Ingrese el precio" min="0" required>
+                <input type="number" name="precio" id="add-precio" placeholder="Ingrese el precio" min="0" step="0.01" required>
                 
-                <label for="stock">Stock</label>
-                <input type="number" name="stock" id="add-stock" placeholder="Ingrese la cantidad disponible" min="0" required>
+    
 
                 <input type="submit" value="Agregar Producto" >
             </form>
         </section>
 
+        <!-- SECCIÓN EDITAR PRODUCTO -->
         <section id="EditarProd" style="display:none;"> 
 
             <form action="" class="formularios" id="actualizar">
                 <h2>Actualizar Datos</h2>
                 
-                <label for="nombre">Nombre</label>
+                <label for="edit-nombre">Nombre</label>
                 <input type="text" name="edit-nombre" id="edit-nombre" required>
 
-                <label for="imagen">Imagen</label>
-                <input type="file" name="edit-imagen" id="edit-imagen" >
+                <!-- CORRECCIÓN: Usamos URL de imagen para edición -->
+                <label for="edit-imagen-url">URL de Imagen</label>
+                <input type="url" name="edit-imagen-url" id="edit-imagen-url" >
                 
-                <label for="descripcion">Descripción</label>
+                <label for="edit-descripcion">Descripción</label>
                 <textarea name="edit-descripcion" id="edit-descripcion" rows="8" required></textarea>
                 
-                <label for="precio">Precio</label>
-                <input type="number" name="edit-precio" id="edit-precio" min="0" required>
+                <label for="edit-precio">Precio</label>
+                <input type="number" name="edit-precio" id="edit-precio" min="0" step="0.01" required>
                 
-                <label for="stock">Stock</label>
-                <input type="number" name="edit-stock" id="edit-stock" min="0" required>
-
                 <input type="submit" value="Actualizar Producto">
+                <!-- Botón de cancelación -->
+                <button type="button" id="cancelarEdicion" class="cancelar-btn">Cancelar Edición</button>
             </form>
         </section>
     </div>
 
     <section id="galeria-admin">
         <p>Cargando productos...</p>
-        </section>
+    </section>
 
 
 <footer id="footer" ></footer>
 
+<!-- Tus scripts -->
 <script src="js/admin.js"></script> 
 <script src="js/modulo.js"></script> 
 
