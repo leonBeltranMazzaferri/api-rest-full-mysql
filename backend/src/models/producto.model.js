@@ -8,7 +8,8 @@ export const getAllProductoDB = async () => {
 };
 
 export const getProductoByIdDB = async (id) => {
-    const [rows] = await pool.query("SELECT * FROM producto WHERE id = ?", [id]); 
+    // 🟢 CORRECCIÓN CLAVE: Cambiado 'id' a 'id_producto' en la cláusula WHERE
+    const [rows] = await pool.query("SELECT * FROM producto WHERE id_producto = ?", [id]); 
     return rows;
 };
 
@@ -18,11 +19,13 @@ export const createProductoDB = async (data) => {
 };
 
 export const updateProductoDB = async (data, id) => {
-    const [result] = await pool.query("UPDATE producto SET ? WHERE id = ?", [data, id]); 
+    // 🟢 CORRECCIÓN CLAVE: Cambiado 'id' a 'id_producto' en la cláusula WHERE
+    const [result] = await pool.query("UPDATE producto SET ? WHERE id_producto = ?", [data, id]); 
     return result;
 };
 
 export const deleteProductoDB = async (id) => {
-    const [result] = await pool.query("DELETE FROM producto WHERE id = ?", [id]); 
+    // 🟢 CORRECCIÓN CLAVE: Cambiado 'id' a 'id_producto' en la cláusula WHERE
+    const [result] = await pool.query("DELETE FROM producto WHERE id_producto = ?", [id]); 
     return result;
 };

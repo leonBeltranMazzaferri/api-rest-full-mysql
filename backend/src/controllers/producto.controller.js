@@ -47,7 +47,7 @@ export const createProducto = async (req, res) => {
     }
 };
 
-// 🚨 CORRECCIÓN 6: Renombramos a updateProducto
+
 export const updateProducto = async (req, res) => {
     try {
         const result = await updateProductoDB(req.body, req.params.id);
@@ -59,7 +59,7 @@ export const updateProducto = async (req, res) => {
     }
 };
 
-// 🚨 CORRECCIÓN 7: Renombramos a deleteProducto
+
 export const deleteProducto = async (req, res) => {
     try {
         const result = await deleteProductoDB(req.params.id);
