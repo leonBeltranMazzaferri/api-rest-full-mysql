@@ -45,7 +45,21 @@ app.use(cors({
     credentials: true // Mantenemos en true, que es lo que exige el frontend
 }));
 
-app.use(express.static(path.join(__dirname, '..', 'frontend')));
+// 🟢 CORRECCIÓN DE RUTA (Usando path.resolve para mayor robustez)
+// Esto calcula la ruta absoluta de la carpeta 'frontend'
+const frontendPath = path.resolve(__dirname, '..', 'frontend');
+
+// 💡 LÍNEA DE DEPURACIÓN: Verifica en tu consola de Node.js qué ruta exacta está sirviendo Express
+console.log(`[EXPRESS DEBUG] Intentando servir archivos estáticos desde: ${frontendPath}`);
+
+// 1. Middleware para servir archivos estáticos (index.html, CSS, JS)
+app.use(express.static(frontendPath));
+
+// 2. Ruta de Fallback: Si alguien accede a la raíz, forzamos a Express a enviar el index.html
+app.get('/', (req, res) => {
+    res.sendFile(path.join(frontendPath, 'index.html'));
+});
+
 
 // --- RUTAS DE API ---
 app.use("/api/producto", productoRoutes);
