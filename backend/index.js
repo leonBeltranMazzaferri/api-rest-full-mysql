@@ -17,47 +17,66 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json()); 
 app.use(cookieParser()); 
 
-// 🚨 CORRECCIÓN CRÍTICA DE CORS 🚨
-// Si se usan credenciales, el origen debe ser explícito, no el comodín (*).
+// 🚨 CONFIGURACIÓN DE CORS 🚨
 const allowedOrigins = [
-    // Origen de tu Live Server de VS Code (el que aparece en el error)
     'http://127.0.0.1:5500', 
-    // Origen del propio servidor (si accedes a la API desde otra ruta del mismo dominio)
     'http://localhost:3000',
-    // Si usas otro puerto (ej. React/Vue/Angular), añádelo aquí:
-    // 'http://localhost:8080' 
+    // Puedes añadir más orígenes aquí
 ];
 
 app.use(cors({
     origin: (origin, callback) => {
-        // Permitir peticiones sin origen (como Postman, peticiones de archivos locales o del propio servidor)
         if (!origin) return callback(null, true); 
-        
-        // Verificar si el origen está en la lista de permitidos
         if (allowedOrigins.indexOf(origin) === -1) {
             const msg = `El origen CORS ${origin} no está permitido.`;
-            // callback(new Error(msg), false); // En producción, usa esto
-            callback(null, false); // Para desarrollo, mejor solo negar
+            callback(null, false); 
         } else {
             callback(null, true);
         }
     },
-    credentials: true // Mantenemos en true, que es lo que exige el frontend
+    credentials: true 
 }));
 
-// 🟢 CORRECCIÓN DE RUTA (Usando path.resolve para mayor robustez)
-// Esto calcula la ruta absoluta de la carpeta 'frontend'
+// 🟢 CONFIGURACIÓN DE RUTAS Y DEP.
 const frontendPath = path.resolve(__dirname, '..', 'frontend');
 
-// 💡 LÍNEA DE DEPURACIÓN: Verifica en tu consola de Node.js qué ruta exacta está sirviendo Express
+// 💡 LÍNEA DE DEPURACIÓN 1: Confirma la ruta de archivos estáticos
 console.log(`[EXPRESS DEBUG] Intentando servir archivos estáticos desde: ${frontendPath}`);
 
-// 1. Middleware para servir archivos estáticos (index.html, CSS, JS)
+// 1. Middleware para servir archivos estáticos
 app.use(express.static(frontendPath));
 
-// 2. Ruta de Fallback: Si alguien accede a la raíz, forzamos a Express a enviar el index.html
+// 2. Ruta de Fallback/Raíz Forzada
 app.get('/', (req, res) => {
-    res.sendFile(path.join(frontendPath, 'index.html'));
+    // 💡 LÍNEA DE DEPURACIÓN 2: Se dispara si se accede a la raíz
+    const indexPath = path.join(frontendPath, 'index.html');
+    console.log(`[FALLBACK HIT] Intentando enviar index.html desde: ${indexPath}`);
+    
+    // Intenta enviar el archivo, y si falla, maneja el error y lo muestra en el navegador
+    res.sendFile(indexPath, (err) => {
+        if (err) {
+            console.error("❌ ERROR al enviar index.html:", err.message);
+            // Si falla (por ejemplo, archivo no encontrado o error de permisos), enviamos HTML de error:
+            res.status(500).send(`
+                <!DOCTYPE html>
+                <html lang="es">
+                <head><title>Error de Carga</title></head>
+                <body style="font-family: sans-serif; padding: 20px; background-color: #f8d7da; border: 1px solid #f5c6cb;">
+                    <h1 style="color: #721c24;">Error 500: No se pudo cargar el index.html</h1>
+                    <p>Express falló al intentar cargar el archivo en la ruta:</p>
+                    <code style="background-color: #f5f5f5; padding: 5px; border-radius: 4px; display: block; margin-bottom: 15px;">${indexPath}</code>
+                    <h3 style="color: #721c24;">Causas más probables:</h3>
+                    <ol>
+                        <li><strong>Nombre de archivo incorrecto:</strong> El archivo NO se llama <code>index.html</code> (por ejemplo, se llama <code>Index.html</code> o <code>index.htm</code>).</li>
+                        <li><strong>Ubicación incorrecta:</strong> El archivo no está DIRECTAMENTE en la carpeta <code>frontend</code>.</li>
+                        <li><strong>Error del sistema:</strong> ${err.message || 'Error desconocido al leer el archivo.'}</li>
+                    </ol>
+                    <p><strong>ACCIONES:</strong> Vuelve a revisar la carpeta <code>frontend</code> y el nombre del archivo.</p>
+                </body>
+                </html>
+            `);
+        }
+    });
 });
 
 
