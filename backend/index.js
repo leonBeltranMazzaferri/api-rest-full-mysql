@@ -29,7 +29,7 @@ const allowedOrigins = [
 ];
 
 app.use(cors({
-    origin: (origin, callback) => {
+    origin: (origin, callback) => {
         // Permitir peticiones sin origen (como Postman, peticiones de archivos locales o del propio servidor)
         if (!origin) return callback(null, true); 
         
@@ -42,11 +42,12 @@ app.use(cors({
             callback(null, true);
         }
     },
-    credentials: true // Mantenemos en true, que es lo que exige el frontend
+    credentials: true // Mantenemos en true, que es lo que exige el frontend
 }));
 
-// --- CONFIGURACIÓN DE ARCHIVOS ESTÁTICOS (FRONTEND) ---
-app.use(express.static(path.join(__dirname, '..', 'public')));
+// 🟢 CORRECCIÓN CLAVE: CAMBIAR 'public' a 'frontend'
+// Ahora Express busca el index.html en la carpeta 'frontend'
+app.use(express.static(path.join(__dirname, '..', 'frontend')));
 
 // --- RUTAS DE API ---
 app.use("/api/producto", productoRoutes);
@@ -55,5 +56,5 @@ app.use("/api/users", usersRoutes);
 
 // --- INICIO DEL SERVIDOR ---
 app.listen(PORT, () => {
-    console.log(`Servidor de la API y el FRONT corriendo en http://localhost:${PORT}`);
+    console.log(`Servidor de la API y el FRONT corriendo en http://localhost:${PORT}`);
 });
