@@ -45,8 +45,6 @@ app.use(cors({
     credentials: true // Mantenemos en true, que es lo que exige el frontend
 }));
 
-// 🟢 CORRECCIÓN CLAVE: CAMBIAR 'public' a 'frontend'
-// Ahora Express busca el index.html en la carpeta 'frontend'
 app.use(express.static(path.join(__dirname, '..', 'frontend')));
 
 // --- RUTAS DE API ---
